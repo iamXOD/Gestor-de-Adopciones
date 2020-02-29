@@ -20,7 +20,7 @@ public interface DAOInterface<Object> {
 
     public boolean add(Object o);
 
-    public boolean update(Object o, int ID);
+    public boolean update(Object o);
 
     public boolean delete(int ID);
 }
