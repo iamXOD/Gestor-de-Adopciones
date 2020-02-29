@@ -28,13 +28,13 @@ public class Connector {
             Class.forName("org.sqlite.JDBC");
             connect = DriverManager.getConnection("jdbc:sqlite:" + url);
             if (connect != null) {
-                System.out.println("Connected successfully!");
             }
         } catch (SQLException ex) {
+            Logger.getLogger(Connector.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("No se ha podido conectar a la base de datos: " + ex.getMessage());
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Connector.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Class Not Found");
+            System.out.println("Class " + Connector.class.getName() + " Not Found");
         }
         return connect;
     }
@@ -66,6 +66,7 @@ public class Connector {
             Connector.close();
             return true;
         } catch (SQLException ex) {
+            Logger.getLogger(Connector.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
         }
         return false;
@@ -124,49 +125,31 @@ public class Connector {
     }
 
     private static boolean createIndexes() {
+        String[] indexes = {
+            "CREATE INDEX IF NOT EXISTS mascota_fechaAdopcion ON Mascota (fechaAdopcion);",
+            "CREATE INDEX IF NOT EXISTS mascota_raza ON Mascota (raza);",
+            "CREATE INDEX IF NOT EXISTS mascota_adoptante ON Mascota (adoptante_id DESC);",
+            "CREATE INDEX IF NOT EXISTS mascota_id ON Mascota (mascota_id DESC);",
+            "CREATE INDEX IF NOT EXISTS direccion_no ON Direccion (no);",
+            "CREATE INDEX IF NOT EXISTS direccion_id ON Direccion (direccion_id DESC);",
+            "CREATE INDEX IF NOT EXISTS adoptante_direccion ON Adoptante (direccion_id DESC);",
+            "CREATE INDEX IF NOT EXISTS adoptante_ci ON Adoptante (ciOPasaporte);",
+            "CREATE INDEX IF NOT EXISTS adoptante_id ON Adoptante (adoptante_id DESC);"
+        };
+        Connection con;
         PreparedStatement pst;
         try {
-            pst = Connector.connect().prepareStatement(
-                    "CREATE INDEX IF NOT EXISTS mascota_fechaAdopcion ON Mascota ("
-                    + "	fechaAdopcion"
-                    + ");"
-                    + ""
-                    + "CREATE INDEX IF NOT EXISTS mascota_raza ON Mascota ("
-                    + "	raza"
-                    + ");"
-                    + ""
-                    + "CREATE INDEX IF NOT EXISTS mascota_adoptante ON Mascota ("
-                    + "	adoptante_id	DESC"
-                    + ");"
-                    + ""
-                    + "CREATE INDEX IF NOT EXISTS mascota_id ON Mascota ("
-                    + "	mascota_id	DESC"
-                    + ");"
-                    + ""
-                    + "CREATE INDEX IF NOT EXISTS direccion_no ON Direccion ("
-                    + "	no"
-                    + ");"
-                    + ""
-                    + "CREATE INDEX IF NOT EXISTS direccion_id ON Direccion ("
-                    + "	direccion_id	DESC"
-                    + ");"
-                    + ""
-                    + "CREATE INDEX IF NOT EXISTS adoptante_direccion ON Adoptante ("
-                    + "	direccion_id	DESC"
-                    + ");"
-                    + ""
-                    + "CREATE INDEX IF NOT EXISTS adoptante_ci ON Adoptante ("
-                    + "	ciOrPassport"
-                    + ");"
-                    + ""
-                    + "CREATE INDEX IF NOT EXISTS adoptante_id ON Adoptante ("
-                    + "	adoptante_id	DESC"
-                    + ");");
-            pst.executeUpdate();
-            pst.close();
+            con = Connector.connect();
+            for (String str : indexes) {
+                pst = null;
+                pst = con.prepareStatement(str);
+                pst.executeUpdate();
+                pst.close();
+            }
             Connector.close();
             return true;
         } catch (SQLException ex) {
+            Logger.getLogger(Connector.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
         }
         return false;
@@ -176,13 +159,13 @@ public class Connector {
         PreparedStatement pst;
         try {
             pst = Connector.connect().prepareStatement(
-                    "CREATE VIEW Adopcion(ID, Mascota, Adoptante, Fecha)"
-                    + "as SELECT Mascota.mascota_id as ID, Mascota.nombre as Mascota,"
-                    + "Adoptante.nombre || ' ' || Adoptante.primerApellido || ' ' || Adoptante.segundoApellido as Adoptante, "
-                    + "Mascota.fechaAdopcion as Fecha"
-                    + "FROM Adoptante INNER JOIN Mascota"
-                    + "USING(adoptante_id)"
-                    + "ORDER BY Mascota.adoptante_id;");
+                    "CREATE VIEW IF NOT EXISTS Adopcion(ID, Mascota, Adoptante, Fecha)"
+                    + " as SELECT Mascota.mascota_id as ID, Mascota.nombre as Mascota,"
+                    + " Adoptante.nombre || ' ' || Adoptante.primerApellido || ' ' || Adoptante.segundoApellido as Adoptante,"
+                    + " Mascota.fechaAdopcion as Fecha"
+                    + " FROM Adoptante INNER JOIN Mascota"
+                    + " USING(adoptante_id)"
+                    + " ORDER BY Mascota.adoptante_id;");
             pst.executeUpdate();
             pst.close();
             Connector.close();
