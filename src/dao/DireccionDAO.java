@@ -40,14 +40,14 @@ public class DireccionDAO implements DAOInterface<Direccion> {
             rs = pst.executeQuery();
             while (rs.next()) {
                 d = new Direccion();
-                d.setDireccion_id(new SimpleIntegerProperty(rs.getInt("direccion_id")));
-                d.setCallePrincipal(new SimpleStringProperty(rs.getString("callePrincipal")));
-                d.setEntreCalle(new SimpleStringProperty(rs.getString("entreCalle")));
-                d.setyCalle(new SimpleStringProperty(rs.getString("yCalle")));
-                d.setNo(new SimpleIntegerProperty(rs.getInt("no")));
-                d.setLocalidad(new SimpleStringProperty(rs.getString("localidad")));
-                d.setMunicipio(new SimpleStringProperty(rs.getString("municipio")));
-                d.setProvincia(new SimpleStringProperty(rs.getString("provincia")));
+                d.setDireccion_id(rs.getInt("direccion_id"));
+                d.setCallePrincipal(rs.getString("callePrincipal"));
+                d.setEntreCalle(rs.getString("entreCalle"));
+                d.setyCalle(rs.getString("yCalle"));
+                d.setNo(rs.getInt("no"));
+                d.setLocalidad(rs.getString("localidad"));
+                d.setMunicipio(rs.getString("municipio"));
+                d.setProvincia(rs.getString("provincia"));
             }
             pst.close();
             rs.close();
@@ -72,14 +72,14 @@ public class DireccionDAO implements DAOInterface<Direccion> {
             rs = pst.executeQuery();
             while (rs.next()) {
                 Direccion d = new Direccion();
-                d.setDireccion_id(new SimpleIntegerProperty(rs.getInt("direccion_id")));
-                d.setCallePrincipal(new SimpleStringProperty(rs.getString("callePrincipal")));
-                d.setEntreCalle(new SimpleStringProperty(rs.getString("entreCalle")));
-                d.setyCalle(new SimpleStringProperty(rs.getString("yCalle")));
-                d.setNo(new SimpleIntegerProperty(rs.getInt("no")));
-                d.setLocalidad(new SimpleStringProperty(rs.getString("localidad")));
-                d.setMunicipio(new SimpleStringProperty(rs.getString("municipio")));
-                d.setProvincia(new SimpleStringProperty(rs.getString("provincia")));
+                d.setDireccion_id(rs.getInt("direccion_id"));
+                d.setCallePrincipal(rs.getString("callePrincipal"));
+                d.setEntreCalle(rs.getString("entreCalle"));
+                d.setyCalle(rs.getString("yCalle"));
+                d.setNo(rs.getInt("no"));
+                d.setLocalidad(rs.getString("localidad"));
+                d.setMunicipio(rs.getString("municipio"));
+                d.setProvincia(rs.getString("provincia"));
                 aux.add(d);
             }
             pst.close();
@@ -104,14 +104,14 @@ public class DireccionDAO implements DAOInterface<Direccion> {
                     + " entreCalle, yCalle, no, localidad,"
                     + " municipio, provincia) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
-            pst.setInt(1, o.getDireccion_id().get());
-            pst.setString(2, o.getCallePrincipal().get());
-            pst.setString(3, o.getEntreCalle().get());
-            pst.setString(4, o.getyCalle().get());
-            pst.setInt(5, o.getNo().get());
-            pst.setString(6, o.getLocalidad().get());
-            pst.setString(7, o.getMunicipio().get());
-            pst.setString(8, o.getProvincia().get());
+            pst.setInt(1, o.getDireccion_id());
+            pst.setString(2, o.getCallePrincipal());
+            pst.setString(3, o.getEntreCalle());
+            pst.setString(4, o.getyCalle());
+            pst.setInt(5, o.getNo());
+            pst.setString(6, o.getLocalidad());
+            pst.setString(7, o.getMunicipio());
+            pst.setString(8, o.getProvincia());
             pst.executeUpdate();
             con.close();
             pst.close();
@@ -138,14 +138,14 @@ public class DireccionDAO implements DAOInterface<Direccion> {
                     + " municipio = ?,"
                     + " provincia = ?"
                     + " WHERE direccion_id = ?");
-            pst.setString(1, o.getCallePrincipal().get());
-            pst.setString(2, o.getEntreCalle().get());
-            pst.setString(3, o.getyCalle().get());
-            pst.setInt(4, o.getNo().get());
-            pst.setString(5, o.getLocalidad().get());
-            pst.setString(6, o.getMunicipio().get());
-            pst.setString(7, o.getProvincia().get());
-            pst.setInt(8, o.getDireccion_id().get());
+            pst.setString(1, o.getCallePrincipal());
+            pst.setString(2, o.getEntreCalle());
+            pst.setString(3, o.getyCalle());
+            pst.setInt(4, o.getNo());
+            pst.setString(5, o.getLocalidad());
+            pst.setString(6, o.getMunicipio());
+            pst.setString(7, o.getProvincia());
+            pst.setInt(8, o.getDireccion_id());
             pst.executeUpdate();
             pst.close();
             con.close();

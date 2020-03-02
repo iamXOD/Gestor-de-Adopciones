@@ -38,56 +38,85 @@ public class Adoptante {
     public Adoptante() {
     }
 
-    public SimpleIntegerProperty getAdoptante_id() {
+    public int getAdoptante_id() {
+        return adoptante_id.get();
+    }
+
+    public SimpleIntegerProperty adoptante_idProperty() {
         return adoptante_id;
     }
 
-    public void setAdoptante_id(SimpleIntegerProperty adoptante_id) {
-        this.adoptante_id = adoptante_id;
+    public void setAdoptante_id(int adoptante_id) {
+        this.adoptante_id = new SimpleIntegerProperty(adoptante_id);
     }
 
-    public SimpleStringProperty getNombre() {
+    public String getNombre() {
+        return nombre.get();
+    }
+
+    public SimpleStringProperty nombreProperty() {
         return nombre;
     }
 
-    public void setNombre(SimpleStringProperty nombre) {
-        this.nombre = nombre;
+    public void setNombre(String nombre) {
+        this.nombre = new SimpleStringProperty(nombre);
     }
 
-    public SimpleStringProperty getPrimerApellido() {
+    public String getPrimerApellido() {
+        return primerApellido.get();
+    }
+
+    public SimpleStringProperty primerApellidoProperty() {
         return primerApellido;
     }
 
-    public void setPrimerApellido(SimpleStringProperty primerApellido) {
-        this.primerApellido = primerApellido;
+    public void setPrimerApellido(String primerApellido) {
+        this.primerApellido = new SimpleStringProperty(primerApellido);
     }
 
-    public SimpleStringProperty getSegundoApellido() {
+    public String getSegundoApellido() {
+        return segundoApellido.get();
+    }
+
+    public SimpleStringProperty segundoApellidoProperty() {
         return segundoApellido;
     }
 
-    public void setSegundoApellido(SimpleStringProperty segundoApellido) {
-        this.segundoApellido = segundoApellido;
+    public void setSegundoApellido(String segundoApellido) {
+        this.segundoApellido = new SimpleStringProperty(segundoApellido);
     }
 
-    public SimpleStringProperty getCiOPasaporte() {
+    public String getCiOPasaporte() {
+        return ciOPasaporte.get();
+    }
+
+    public SimpleStringProperty ciOPasaporteProperty() {
         return ciOPasaporte;
     }
 
-    public void setCiOPasaporte(SimpleStringProperty ciOPasaporte) {
-        this.ciOPasaporte = ciOPasaporte;
+    public void setCiOPasaporte(String ciOPasaporte) {
+        this.ciOPasaporte = new SimpleStringProperty(ciOPasaporte);
     }
 
-    public SimpleBooleanProperty getGenero() {
-        return genero;
+    public boolean getGenero() {
+        return genero.get();
     }
 
-    public void setGenero(SimpleBooleanProperty genero) {
-        this.genero = genero;
+    public SimpleStringProperty generoProperty() {
+        String aux = genero.get() ? "Masculino" : "Femenino";
+        return new SimpleStringProperty(aux);
+    }
+
+    public void setGenero(boolean genero) {
+        this.genero = new SimpleBooleanProperty(genero);
     }
 
     public Direccion getDireccion() {
         return direccion;
+    }
+
+    public SimpleStringProperty direccionProperty() {
+        return new SimpleStringProperty(direccion.toString());
     }
 
     public void setDireccion(Direccion direccion) {

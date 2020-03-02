@@ -44,91 +44,136 @@ public class Mascota {
         this.adoptante = adoptante;
     }
 
-    public SimpleIntegerProperty getMascota_id() {
-        return mascota_id;
-    }
-
-    public void setMascota_id(SimpleIntegerProperty mascota_id) {
-        this.mascota_id = mascota_id;
-    }
-
     public Mascota() {
     }
 
-    public SimpleStringProperty getNombre() {
+    public int getMascota_id() {
+        return mascota_id.get();
+    }
+
+    public SimpleIntegerProperty mascota_idProperty() {
+        return mascota_id;
+    }
+
+    public void setMascota_id(int mascota_id) {
+        this.mascota_id = new SimpleIntegerProperty(mascota_id);
+    }
+
+    public String getNombre() {
+        return nombre.get();
+    }
+
+    public SimpleStringProperty nombreProperty() {
         return nombre;
     }
 
-    public void setNombre(SimpleStringProperty nombre) {
-        this.nombre = nombre;
+    public void setNombre(String nombre) {
+        this.nombre = new SimpleStringProperty(nombre);
     }
 
-    public SimpleStringProperty getRaza() {
+    public String getRaza() {
+        return raza.get();
+    }
+
+    public SimpleStringProperty razaProperty() {
         return raza;
     }
 
-    public void setRaza(SimpleStringProperty raza) {
-        this.raza = raza;
+    public void setRaza(String raza) {
+        this.raza = new SimpleStringProperty(raza);
     }
 
-    public SimpleStringProperty getColor() {
+    public String getColor() {
+        return color.get();
+    }
+
+    public SimpleStringProperty colorProperty() {
         return color;
     }
 
-    public void setColor(SimpleStringProperty color) {
-        this.color = color;
+    public void setColor(String color) {
+        this.color = new SimpleStringProperty(color);
     }
 
-    public SimpleIntegerProperty getEdad() {
+    public int getEdad() {
+        return edad.get();
+    }
+
+    public SimpleIntegerProperty edadProperty() {
         return edad;
     }
 
-    public void setEdad(SimpleIntegerProperty edad) {
-        this.edad = edad;
+    public void setEdad(int edad) {
+        this.edad = new SimpleIntegerProperty(edad);
     }
 
-    public SimpleBooleanProperty getGenero() {
-        return genero;
+    public Boolean getGenero() {
+        return genero.get();
     }
 
-    public void setGenero(SimpleBooleanProperty genero) {
-        this.genero = genero;
+    public SimpleStringProperty generoProperty() {
+        String aux = genero.get() ? "Masculino" : "Femenino";
+        return new SimpleStringProperty(aux);
     }
 
-    public SimpleDoubleProperty getPeso() {
+    public void setGenero(boolean genero) {
+        this.genero = new SimpleBooleanProperty(genero);
+    }
+
+    public Double getPeso() {
+        return peso.get();
+    }
+
+    public SimpleDoubleProperty pesoProperty() {
         return peso;
     }
 
-    public void setPeso(SimpleDoubleProperty peso) {
-        this.peso = peso;
+    public void setPeso(double peso) {
+        this.peso = new SimpleDoubleProperty(peso);
     }
 
-    public SimpleStringProperty getUltimaDesparacitacion() {
+    public String getUltimaDesparacitacion() {
+        return ultimaDesparacitacion.get();
+    }
+
+    public SimpleStringProperty ultimaDesparacitacionProperty() {
         return ultimaDesparacitacion;
     }
 
-    public void setUltimaDesparacitacion(SimpleStringProperty ultimaDesparacitacion) {
-        this.ultimaDesparacitacion = ultimaDesparacitacion;
+    public void setUltimaDesparacitacion(String ultimaDesparacitacion) {
+        this.ultimaDesparacitacion = new SimpleStringProperty(ultimaDesparacitacion);
     }
 
-    public SimpleStringProperty getUltimaVacunacion() {
+    public String getUltimaVacunacion() {
+        return ultimaVacunacion.get();
+    }
+
+    public SimpleStringProperty ultimaVacunacionProperty() {
         return ultimaVacunacion;
     }
 
-    public void setUltimaVacunacion(SimpleStringProperty ultimaVacunacion) {
-        this.ultimaVacunacion = ultimaVacunacion;
+    public void setUltimaVacunacion(String ultimaVacunacion) {
+        this.ultimaVacunacion = new SimpleStringProperty(ultimaVacunacion);
     }
 
-    public SimpleStringProperty getFechaAdopcion() {
+    public String getFechaAdopcion() {
+        return fechaAdopcion.get();
+    }
+
+    public SimpleStringProperty fechaAdopcionProperty() {
         return fechaAdopcion;
     }
 
-    public void setFechaAdopcion(SimpleStringProperty fechaAdopcion) {
-        this.fechaAdopcion = fechaAdopcion;
+    public void setFechaAdopcion(String fechaAdopcion) {
+        this.fechaAdopcion = new SimpleStringProperty(fechaAdopcion);
     }
 
     public Adoptante getAdoptante() {
         return adoptante;
+    }
+
+    public SimpleStringProperty adoptanteProperty() {
+        return new SimpleStringProperty(adoptante.toString());
     }
 
     public void setAdoptante(Adoptante adoptante) {

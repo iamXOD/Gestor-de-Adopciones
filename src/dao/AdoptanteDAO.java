@@ -41,12 +41,12 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
             rs = pst.executeQuery();
             while (rs.next()) {
                 a = new Adoptante();
-                a.setAdoptante_id(new SimpleIntegerProperty(rs.getInt("adoptante_id")));
-                a.setNombre(new SimpleStringProperty(rs.getString("nombre")));
-                a.setPrimerApellido(new SimpleStringProperty(rs.getString("primerApellido")));
-                a.setSegundoApellido(new SimpleStringProperty(rs.getString("segundoApellido")));
-                a.setCiOPasaporte(new SimpleStringProperty(rs.getString("ciOPasaporte")));
-                a.setGenero(new SimpleBooleanProperty(rs.getBoolean("genero")));
+                a.setAdoptante_id(rs.getInt("adoptante_id"));
+                a.setNombre(rs.getString("nombre"));
+                a.setPrimerApellido(rs.getString("primerApellido"));
+                a.setSegundoApellido(rs.getString("segundoApellido"));
+                a.setCiOPasaporte(rs.getString("ciOPasaporte"));
+                a.setGenero(rs.getBoolean("genero"));
                 a.setDireccion(d.get(rs.getInt("direccion_id")));
             }
             pst.close();
@@ -72,12 +72,12 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
             rs = pst.executeQuery();
             while (rs.next()) {
                 Adoptante a = new Adoptante();
-                a.setAdoptante_id(new SimpleIntegerProperty(rs.getInt("adoptante_id")));
-                a.setNombre(new SimpleStringProperty(rs.getString("nombre")));
-                a.setPrimerApellido(new SimpleStringProperty(rs.getString("primerApellido")));
-                a.setSegundoApellido(new SimpleStringProperty(rs.getString("segundoApellido")));
-                a.setCiOPasaporte(new SimpleStringProperty(rs.getString("ciOPasaporte")));
-                a.setGenero(new SimpleBooleanProperty(rs.getBoolean("genero")));
+                a.setAdoptante_id(rs.getInt("adoptante_id"));
+                a.setNombre(rs.getString("nombre"));
+                a.setPrimerApellido(rs.getString("primerApellido"));
+                a.setSegundoApellido(rs.getString("segundoApellido"));
+                a.setCiOPasaporte(rs.getString("ciOPasaporte"));
+                a.setGenero(rs.getBoolean("genero"));
                 a.setDireccion(d.get(rs.getInt("direccion_id")));
                 aux.add(a);
             }
@@ -101,13 +101,13 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
                     + " (adoptante_id, nombre, primerApellido,"
                     + " segundoApellido, ciOPasaporte, genero, direccion_id)"
                     + "VALUES (?, ?, ?, ?, ?, ?, ?)");
-            pst.setInt(1, o.getAdoptante_id().get());
-            pst.setString(2, o.getNombre().get());
-            pst.setString(3, o.getPrimerApellido().get());
-            pst.setString(4, o.getSegundoApellido().get());
-            pst.setString(5, o.getCiOPasaporte().get());
-            pst.setBoolean(6, o.getGenero().get());
-            pst.setInt(7, o.getDireccion().getDireccion_id().get());
+            pst.setInt(1, o.getAdoptante_id());
+            pst.setString(2, o.getNombre());
+            pst.setString(3, o.getPrimerApellido());
+            pst.setString(4, o.getSegundoApellido());
+            pst.setString(5, o.getCiOPasaporte());
+            pst.setBoolean(6, o.getGenero());
+            pst.setInt(7, o.getDireccion().getDireccion_id());
             pst.executeUpdate();
             pst.close();
             con.close();
@@ -133,13 +133,13 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
                     + " genero = ?,"
                     + " direccion_id = ?"
                     + " WHERE adoptante_id = ?");
-            pst.setString(1, o.getNombre().get());
-            pst.setString(2, o.getPrimerApellido().get());
-            pst.setString(3, o.getSegundoApellido().get());
-            pst.setString(4, o.getCiOPasaporte().get());
-            pst.setBoolean(5, o.getGenero().get());
-            pst.setInt(6, o.getDireccion().getDireccion_id().get());
-            pst.setInt(7, o.getAdoptante_id().get());
+            pst.setString(1, o.getNombre());
+            pst.setString(2, o.getPrimerApellido());
+            pst.setString(3, o.getSegundoApellido());
+            pst.setString(4, o.getCiOPasaporte());
+            pst.setBoolean(5, o.getGenero());
+            pst.setInt(6, o.getDireccion().getDireccion_id());
+            pst.setInt(7, o.getAdoptante_id());
             pst.executeUpdate();
             pst.close();
             con.close();

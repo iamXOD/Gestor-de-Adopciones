@@ -42,16 +42,16 @@ public class MascotaDAO implements DAOInterface<Mascota> {
             rs = pst.executeQuery();
             while (rs.next()) {
                 m = new Mascota();
-                m.setMascota_id(new SimpleIntegerProperty(rs.getInt("mascota_id")));
-                m.setNombre(new SimpleStringProperty(rs.getString("nombre")));
-                m.setRaza(new SimpleStringProperty(rs.getString("raza")));
-                m.setColor(new SimpleStringProperty(rs.getString("color")));
-                m.setEdad(new SimpleIntegerProperty(rs.getInt("edad")));
-                m.setGenero(new SimpleBooleanProperty(rs.getBoolean("genero")));
-                m.setPeso(new SimpleDoubleProperty(rs.getDouble("peso")));
-                m.setUltimaDesparacitacion(new SimpleStringProperty(rs.getString("ultimaDesparacitacion")));
-                m.setUltimaVacunacion(new SimpleStringProperty(rs.getString("ultimaVacunacion")));
-                m.setFechaAdopcion(new SimpleStringProperty(rs.getString("fechaAdopcion")));
+                m.setMascota_id(rs.getInt("mascota_id"));
+                m.setNombre(rs.getString("nombre"));
+                m.setRaza(rs.getString("raza"));
+                m.setColor(rs.getString("color"));
+                m.setEdad(rs.getInt("edad"));
+                m.setGenero(rs.getBoolean("genero"));
+                m.setPeso(rs.getDouble("peso"));
+                m.setUltimaDesparacitacion(rs.getString("ultimaDesparacitacion"));
+                m.setUltimaVacunacion(rs.getString("ultimaVacunacion"));
+                m.setFechaAdopcion(rs.getString("fechaAdopcion"));
                 m.setAdoptante(a.get(rs.getInt("adoptante_id")));
             }
             pst.close();
@@ -78,16 +78,16 @@ public class MascotaDAO implements DAOInterface<Mascota> {
             while (rs.next()) {
                 Mascota m = new Mascota();
                 m.setAdoptante(a.get(rs.getInt("adoptante_id")));
-                m.setMascota_id(new SimpleIntegerProperty(rs.getInt("mascota_id")));
-                m.setNombre(new SimpleStringProperty(rs.getString("nombre")));
-                m.setRaza(new SimpleStringProperty(rs.getString("raza")));
-                m.setColor(new SimpleStringProperty(rs.getString("color")));
-                m.setEdad(new SimpleIntegerProperty(rs.getInt("edad")));
-                m.setGenero(new SimpleBooleanProperty(rs.getBoolean("genero")));
-                m.setPeso(new SimpleDoubleProperty(rs.getDouble("peso")));
-                m.setUltimaDesparacitacion(new SimpleStringProperty(rs.getString("ultimaDesparacitacion")));
-                m.setUltimaVacunacion(new SimpleStringProperty(rs.getString("ultimaVacunacion")));
-                m.setFechaAdopcion(new SimpleStringProperty(rs.getString("fechaAdopcion")));
+                m.setMascota_id(rs.getInt("mascota_id"));
+                m.setNombre(rs.getString("nombre"));
+                m.setRaza(rs.getString("raza"));
+                m.setColor(rs.getString("color"));
+                m.setEdad(rs.getInt("edad"));
+                m.setGenero(rs.getBoolean("genero"));
+                m.setPeso(rs.getDouble("peso"));
+                m.setUltimaDesparacitacion(rs.getString("ultimaDesparacitacion"));
+                m.setUltimaVacunacion(rs.getString("ultimaVacunacion"));
+                m.setFechaAdopcion(rs.getString("fechaAdopcion"));
                 aux.add(m);
             }
             pst.close();
@@ -112,17 +112,17 @@ public class MascotaDAO implements DAOInterface<Mascota> {
                     + " ultimaDesparacitacion, ultimaVacunacion,"
                     + " fechaAdopcion) VALUES"
                     + " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            pst.setInt(1, o.getMascota_id().get());
-            pst.setInt(2, o.getAdoptante().getAdoptante_id().get());
-            pst.setString(3, o.getNombre().get());
-            pst.setString(4, o.getRaza().get());
-            pst.setString(5, o.getColor().get());
-            pst.setInt(6, o.getEdad().get());
-            pst.setBoolean(7, o.getGenero().get());
-            pst.setDouble(8, o.getPeso().get());
-            pst.setString(9, o.getUltimaDesparacitacion().get());
-            pst.setString(10, o.getUltimaVacunacion().get());
-            pst.setString(11, o.getFechaAdopcion().get());
+            pst.setInt(1, o.getMascota_id());
+            pst.setInt(2, o.getAdoptante().getAdoptante_id());
+            pst.setString(3, o.getNombre());
+            pst.setString(4, o.getRaza());
+            pst.setString(5, o.getColor());
+            pst.setInt(6, o.getEdad());
+            pst.setBoolean(7, o.getGenero());
+            pst.setDouble(8, o.getPeso());
+            pst.setString(9, o.getUltimaDesparacitacion());
+            pst.setString(10, o.getUltimaVacunacion());
+            pst.setString(11, o.getFechaAdopcion());
             pst.executeUpdate();
             pst.close();
             con.close();
@@ -152,17 +152,17 @@ public class MascotaDAO implements DAOInterface<Mascota> {
                     + " ultimaVacunacion = ?,"
                     + " fechaAdopcion = ?"
                     + " WHERE mascota_id = ?");
-            pst.setInt(1, o.getAdoptante().getAdoptante_id().get());
-            pst.setString(2, o.getNombre().get());
-            pst.setString(3, o.getRaza().get());
-            pst.setString(4, o.getColor().get());
-            pst.setInt(5, o.getEdad().get());
-            pst.setBoolean(6, o.getGenero().get());
-            pst.setDouble(7, o.getPeso().get());
-            pst.setString(8, o.getUltimaDesparacitacion().get());
-            pst.setString(9, o.getUltimaVacunacion().get());
-            pst.setString(10, o.getFechaAdopcion().get());
-            pst.setInt(11, o.getMascota_id().get());
+            pst.setInt(1, o.getAdoptante().getAdoptante_id());
+            pst.setString(2, o.getNombre());
+            pst.setString(3, o.getRaza());
+            pst.setString(4, o.getColor());
+            pst.setInt(5, o.getEdad());
+            pst.setBoolean(6, o.getGenero());
+            pst.setDouble(7, o.getPeso());
+            pst.setString(8, o.getUltimaDesparacitacion());
+            pst.setString(9, o.getUltimaVacunacion());
+            pst.setString(10, o.getFechaAdopcion());
+            pst.setInt(11, o.getMascota_id());
             pst.executeUpdate();
             pst.close();
             con.close();

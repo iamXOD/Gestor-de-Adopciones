@@ -13,9 +13,9 @@ import javafx.beans.property.SimpleStringProperty;
  * @author HAROLD
  */
 public class Direccion {
-
+    
     public static Direccion EMPTY = new Direccion();
-
+    
     private SimpleIntegerProperty direccion_id;
     private SimpleStringProperty callePrincipal;
     private SimpleStringProperty entreCalle;
@@ -24,7 +24,7 @@ public class Direccion {
     private SimpleStringProperty localidad;
     private SimpleStringProperty municipio;
     private SimpleStringProperty provincia;
-
+    
     public Direccion(int direccion_id, String callePrincipal, String entreCalle, String yCalle, int no, String localidad, String municipio, String provincia) {
         this.direccion_id = new SimpleIntegerProperty(direccion_id);
         this.callePrincipal = new SimpleStringProperty(callePrincipal);
@@ -35,74 +35,106 @@ public class Direccion {
         this.municipio = new SimpleStringProperty(municipio);
         this.provincia = new SimpleStringProperty(provincia);
     }
-
+    
     public Direccion() {
     }
-
-    public SimpleIntegerProperty getDireccion_id() {
+    
+    public int getDireccion_id() {
+        return direccion_id.get();
+    }
+    
+    public SimpleIntegerProperty direccion_idProperty() {
         return direccion_id;
     }
-
-    public void setDireccion_id(SimpleIntegerProperty direccion_id) {
-        this.direccion_id = direccion_id;
+    
+    public void setDireccion_id(int direccion_id) {
+        this.direccion_id = new SimpleIntegerProperty(direccion_id);
     }
-
-    public SimpleStringProperty getCallePrincipal() {
+    
+    public String getCallePrincipal() {
+        return callePrincipal.get();
+    }
+    
+    public SimpleStringProperty callePrincipalProperty() {
         return callePrincipal;
     }
-
-    public void setCallePrincipal(SimpleStringProperty callePrincipal) {
-        this.callePrincipal = callePrincipal;
+    
+    public void setCallePrincipal(String callePrincipal) {
+        this.callePrincipal = new SimpleStringProperty(callePrincipal);
     }
-
-    public SimpleStringProperty getEntreCalle() {
+    
+    public String getEntreCalle() {
+        return entreCalle.get();
+    }
+    
+    public SimpleStringProperty entreCalleProperty() {
         return entreCalle;
     }
-
-    public void setEntreCalle(SimpleStringProperty entreCalle) {
-        this.entreCalle = entreCalle;
+    
+    public void setEntreCalle(String entreCalle) {
+        this.entreCalle = new SimpleStringProperty(entreCalle);
     }
-
-    public SimpleStringProperty getyCalle() {
+    
+    public String getyCalle() {
+        return yCalle.get();
+    }
+    
+    public SimpleStringProperty yCalleProperty() {
         return yCalle;
     }
-
-    public void setyCalle(SimpleStringProperty yCalle) {
-        this.yCalle = yCalle;
+    
+    public void setyCalle(String yCalle) {
+        this.yCalle = new SimpleStringProperty(yCalle);
     }
-
-    public SimpleIntegerProperty getNo() {
+    
+    public int getNo() {
+        return no.get();
+    }
+    
+    public SimpleIntegerProperty noProperty() {
         return no;
     }
-
-    public void setNo(SimpleIntegerProperty no) {
-        this.no = no;
+    
+    public void setNo(int no) {
+        this.no = new SimpleIntegerProperty(no);
     }
-
-    public SimpleStringProperty getLocalidad() {
+    
+    public String getLocalidad() {
+        return localidad.get();
+    }
+    
+    public SimpleStringProperty localidadProperty() {
         return localidad;
     }
-
-    public void setLocalidad(SimpleStringProperty localidad) {
-        this.localidad = localidad;
+    
+    public void setLocalidad(String localidad) {
+        this.localidad = new SimpleStringProperty(localidad);
     }
-
-    public SimpleStringProperty getMunicipio() {
+    
+    public String getMunicipio() {
+        return municipio.get();
+    }
+    
+    public SimpleStringProperty municipioProperty() {
         return municipio;
     }
-
-    public void setMunicipio(SimpleStringProperty municipio) {
-        this.municipio = municipio;
+    
+    public void setMunicipio(String municipio) {
+        this.municipio = new SimpleStringProperty(municipio);
     }
-
-    public SimpleStringProperty getProvincia() {
+    
+    public String getProvincia() {
+        return provincia.get();
+    }
+    
+    public SimpleStringProperty provinciaProperty() {
         return provincia;
     }
-
-    public void setProvincia(SimpleStringProperty provincia) {
-        this.provincia = provincia;
+    
+    public void setProvincia(String provincia) {
+        this.provincia = new SimpleStringProperty(provincia);
     }
-
+    
     @Override
     public String toString() {
         return this.callePrincipal.get() + " entre " + this.entreCalle.get() + " y "
