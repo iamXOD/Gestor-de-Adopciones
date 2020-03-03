@@ -11,8 +11,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
@@ -20,7 +18,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainViewController">
+<VBox prefHeight="600.0" prefWidth="900.0" stylesheets="@../css/mainview.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainViewController">
     <children>
         <MenuBar prefWidth="900.0" VBox.vgrow="NEVER">
             <menus>
@@ -66,54 +64,51 @@
                   <HBox alignment="CENTER" prefWidth="900.0" SplitPane.resizableWithParent="false">
                       <children>
                           <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="150.0" text="Registro" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
-                          <ToggleButton contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Mascota" textAlignment="CENTER" HBox.hgrow="ALWAYS">
-                              <toggleGroup>
-                                  <ToggleGroup fx:id="toggleclass" />
-                              </toggleGroup>
-                          </ToggleButton>
-                          <ToggleButton contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Adoptante" toggleGroup="$toggleclass" HBox.hgrow="ALWAYS" />
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#mascota_tab" prefHeight="30.0" prefWidth="150.0" text="Mascota" />
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#adoptante_tab" prefHeight="30.0" prefWidth="150.0" text="Adoptante" />
                           <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="150.0" text="Acciones" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
                           <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Adicionar" HBox.hgrow="ALWAYS" />
                   <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Detalles" />
                           <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Editar" HBox.hgrow="ALWAYS" />
                           <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Eliminar" HBox.hgrow="ALWAYS" />
-                          <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Buscar" HBox.hgrow="ALWAYS" />
+                          <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#search_tab" prefHeight="30.0" prefWidth="150.0" text="Buscar" HBox.hgrow="ALWAYS" />
                       </children>
                   </HBox>
-            <StackPane>
+            <StackPane style="-fx-alignment: CENTER;">
                <children>
-                  <TextField maxWidth="200.0" prefWidth="150.0" promptText="Search" StackPane.alignment="BOTTOM_RIGHT" />
+                  <TextField fx:id="search_tfield" maxWidth="200.0" prefWidth="150.0" promptText="Search" StackPane.alignment="BOTTOM_RIGHT" />
+                        <TableView fx:id="mascota_tbl" prefWidth="900.0" StackPane.alignment="CENTER">
+                            <columns>
+                                <TableColumn fx:id="mascota_id_col" editable="false" maxWidth="25.0" minWidth="-Infinity" prefWidth="25.0" resizable="false" text="ID" />
+                                <TableColumn fx:id="mascota_nombre_col" editable="false" maxWidth="120.0" minWidth="50.0" prefWidth="60.0" text="Nombre" />
+                        <TableColumn fx:id="mascota_adoptante_col" editable="false" maxWidth="250.0" minWidth="90.0" prefWidth="110.0" text="Adoptante" />
+                        <TableColumn fx:id="mascota_fechaAdopcion_col" editable="false" maxWidth="150.0" minWidth="80.0" prefWidth="100.0" text="Fecha de Adopcion" />
+                                <TableColumn fx:id="mascota_raza_col" editable="false" maxWidth="120.0" minWidth="60.0" text="Raza" />
+                        <TableColumn fx:id="mascota_color_col" editable="false" maxWidth="80.0" minWidth="60.0" prefWidth="70.0" text="Color" />
+                                <TableColumn fx:id="mascota_edad_col" editable="false" maxWidth="60.0" minWidth="25.0" prefWidth="40.0" text="Edad" />
+                        <TableColumn fx:id="mascota_genero_col" editable="false" maxWidth="80.0" minWidth="40.0" prefWidth="70.0" text="Genero" />
+                        <TableColumn fx:id="mascota_peso_col" editable="false" maxWidth="60.0" minWidth="30.0" prefWidth="40.0" text="Peso" />
+                        <TableColumn fx:id="mascota_ultimaDesparacitacion_col" editable="false" maxWidth="130.0" minWidth="60.0" prefWidth="110.0" text="Ultima Desparacitacion" />
+                        <TableColumn fx:id="mascota_ultimaVacunacion_col" editable="false" maxWidth="130.0" minWidth="60.0" prefWidth="110.0" text="Ultima Vacunacion" />
+                            </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                        </TableView>
                   <TableView fx:id="adoptante_tbl" prefWidth="900.0">
                      <columns>
-                        <TableColumn fx:id="adoptante_id_col" editable="false" prefWidth="75.0" text="Adoptante ID" />
-                        <TableColumn fx:id="adoptante_nombre_col" editable="false" prefWidth="75.0" text="Nombre" />
-                        <TableColumn fx:id="adoptante_primerApellido_col" editable="false" prefWidth="75.0" text="Primer Apellido" />
-                        <TableColumn fx:id="adoptante_segundoApellido_col" editable="false" prefWidth="75.0" text="Segundo Apellido" />
-                        <TableColumn fx:id="adoptante_ciOPasaporte_col" editable="false" prefWidth="75.0" text="CI o Pasaporte" />
-                        <TableColumn fx:id="adoptante_genero_col" editable="false" prefWidth="75.0" text="Genero" />
-                        <TableColumn fx:id="adoptante_direccion_id_col" editable="false" prefWidth="75.0" text="Direccion" />
+                        <TableColumn fx:id="adoptante_id_col" editable="false" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" resizable="false" text="ID" />
+                        <TableColumn fx:id="adoptante_nombre_col" editable="false" maxWidth="200.0" minWidth="60.0" prefWidth="120.0" text="Nombre" />
+                        <TableColumn fx:id="adoptante_primerApellido_col" editable="false" maxWidth="200.0" minWidth="60.0" prefWidth="100.0" text="Primer Apellido" />
+                        <TableColumn fx:id="adoptante_segundoApellido_col" editable="false" maxWidth="200.0" minWidth="60.0" prefWidth="110.0" text="Segundo Apellido" />
+                        <TableColumn fx:id="adoptante_ciOPasaporte_col" editable="false" maxWidth="200.0" minWidth="60.0" prefWidth="90.0" text="CI o Pasaporte" />
+                        <TableColumn fx:id="adoptante_genero_col" editable="false" maxWidth="100.0" minWidth="60.0" prefWidth="70.0" text="Genero" />
+                        <TableColumn fx:id="adoptante_direccion_id_col" editable="false" maxWidth="500.0" minWidth="300.0" prefWidth="400.0" text="Direccion" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                        <TableView fx:id="mascota_tbl" prefWidth="900.0" StackPane.alignment="CENTER">
-                            <columns>
-                                <TableColumn fx:id="mascota_id_col" editable="false" prefWidth="75.0" text="Mascota ID" />
-                                <TableColumn fx:id="mascota_nombre_col" editable="false" prefWidth="75.0" text="Nombre" />
-                        <TableColumn fx:id="mascota_adoptante_col" editable="false" prefWidth="75.0" text="Adoptante" />
-                        <TableColumn fx:id="mascota_fechaAdopcion_col" editable="false" prefWidth="75.0" text="Fecha de Adopcion" />
-                                <TableColumn fx:id="mascota_raza_col" editable="false" prefWidth="75.0" text="Raza" />
-                                <TableColumn fx:id="mascota_edad_col" editable="false" prefWidth="75.0" text="Edad" />
-                        <TableColumn fx:id="mascota_genero_col" editable="false" prefWidth="75.0" text="Genero" />
-                        <TableColumn fx:id="mascota_peso_col" editable="false" prefWidth="75.0" text="Peso" />
-                        <TableColumn fx:id="mascota_ultimaDesparacitacion_col" editable="false" prefWidth="75.0" text="Ultima Desparacitacion" />
-                        <TableColumn fx:id="mascota_ultimaVacunacion_col" editable="false" prefWidth="75.0" text="Ultima Vacunacion" />
-                            </columns>
-                            <columnResizePolicy>
-                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                            </columnResizePolicy>
-                        </TableView>
                </children>
             </StackPane>
             </items>
