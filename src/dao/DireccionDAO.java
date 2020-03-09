@@ -93,40 +93,45 @@ public class DireccionDAO implements DAOInterface<Direccion> {
     }
 
     @Override
-    public boolean add(Direccion o) {
+    public int add(Direccion o) {
         Connection con;
         PreparedStatement pst;
+        ResultSet rs;
         try {
             con = Connector.connect();
             pst = con.prepareStatement(
                     "INSERT INTO Direccion"
-                    + " (direccion_id, callePrincipal,"
+                    + " (callePrincipal,"
                     + " entreCalle, yCalle, no, localidad,"
                     + " municipio, provincia) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
-            pst.setInt(1, o.getDireccion_id());
-            pst.setString(2, o.getCallePrincipal());
-            pst.setString(3, o.getEntreCalle());
-            pst.setString(4, o.getyCalle());
-            pst.setInt(5, o.getNo());
-            pst.setString(6, o.getLocalidad());
-            pst.setString(7, o.getMunicipio());
-            pst.setString(8, o.getProvincia());
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?);");
+            pst.setString(1, o.getCallePrincipal());
+            pst.setString(2, o.getEntreCalle());
+            pst.setString(3, o.getyCalle());
+            pst.setInt(4, o.getNo());
+            pst.setString(5, o.getLocalidad());
+            pst.setString(6, o.getMunicipio());
+            pst.setString(7, o.getProvincia());
             pst.executeUpdate();
+            pst = con.prepareStatement("SELECT seq FROM sqlite_sequence WHERE name = \"Direccion\";");
+            rs = pst.executeQuery();
+            int rowid = rs.getInt("seq");
             con.close();
             pst.close();
-            return true;
+            rs.close();
+            return rowid;
         } catch (SQLException ex) {
             Logger.getLogger(DireccionDAO.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
-            return false;
+            return 0;
         }
     }
 
     @Override
-    public boolean update(Direccion o) {
+    public int update(Direccion o) {
         Connection con;
         PreparedStatement pst;
+        ResultSet rs;
         try {
             con = Connector.connect();
             pst = con.prepareStatement("UPDATE Direccion SET"
@@ -147,13 +152,17 @@ public class DireccionDAO implements DAOInterface<Direccion> {
             pst.setString(7, o.getProvincia());
             pst.setInt(8, o.getDireccion_id());
             pst.executeUpdate();
+            pst = con.prepareStatement("SELECT seq FROM sqlite_sequence WHERE name = \"Direccion\";");
+            rs = pst.executeQuery();
+            int rowid = rs.getInt("seq");
             pst.close();
+            rs.close();
             con.close();
-            return true;
+            return rowid;
         } catch (SQLException ex) {
             Logger.getLogger(DireccionDAO.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
-            return false;
+            return 0;
         }
     }
 

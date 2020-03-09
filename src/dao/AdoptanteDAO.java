@@ -14,9 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Adoptante;
@@ -92,37 +89,43 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
     }
 
     @Override
-    public boolean add(Adoptante o) {
+    public int add(Adoptante o) {
         Connection con;
         PreparedStatement pst;
+        ResultSet rs;
+        DireccionDAO direcciones = new DireccionDAO();
         try {
             con = Connector.connect();
             pst = con.prepareStatement("INSERT INTO Adoptante"
-                    + " (adoptante_id, nombre, primerApellido,"
+                    + " (nombre, primerApellido,"
                     + " segundoApellido, ciOPasaporte, genero, direccion_id)"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?)");
-            pst.setInt(1, o.getAdoptante_id());
-            pst.setString(2, o.getNombre());
-            pst.setString(3, o.getPrimerApellido());
-            pst.setString(4, o.getSegundoApellido());
-            pst.setString(5, o.getCiOPasaporte());
-            pst.setBoolean(6, o.getGenero());
-            pst.setInt(7, o.getDireccion().getDireccion_id());
+                    + "VALUES (?, ?, ?, ?, ?, ?)");
+            pst.setString(1, o.getNombre());
+            pst.setString(2, o.getPrimerApellido());
+            pst.setString(3, o.getSegundoApellido());
+            pst.setString(4, o.getCiOPasaporte());
+            pst.setBoolean(5, o.getGenero());
+            int direccion_id = direcciones.add(o.getDireccion());
+            pst.setInt(6, direccion_id);
             pst.executeUpdate();
+            pst = con.prepareStatement("SELECT seq FROM sqlite_sequence WHERE name = \"Adoptante\";");
+            rs = pst.executeQuery();
+            int rowid = rs.getInt("seq");
             pst.close();
             con.close();
-            return true;
+            return rowid;
         } catch (SQLException ex) {
             Logger.getLogger(AdoptanteDAO.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
-            return false;
+            return 0;
         }
     }
 
     @Override
-    public boolean update(Adoptante o) {
+    public int update(Adoptante o) {
         Connection con;
         PreparedStatement pst;
+        ResultSet rs;
         try {
             con = Connector.connect();
             pst = con.prepareStatement("UPDATE Adoptante SET"
@@ -141,13 +144,16 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
             pst.setInt(6, o.getDireccion().getDireccion_id());
             pst.setInt(7, o.getAdoptante_id());
             pst.executeUpdate();
+            pst = con.prepareStatement("SELECT seq FROM sqlite_sequence WHERE name = \"Adoptante\";");
+            rs = pst.executeQuery();
+            int rowid = rs.getInt("seq");
             pst.close();
             con.close();
-            return true;
+            return rowid;
         } catch (SQLException ex) {
             Logger.getLogger(AdoptanteDAO.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
-            return false;
+            return 0;
         }
     }
 

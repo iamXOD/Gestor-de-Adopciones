@@ -14,10 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Mascota;
@@ -101,43 +97,49 @@ public class MascotaDAO implements DAOInterface<Mascota> {
     }
 
     @Override
-    public boolean add(Mascota o) {
+    public int add(Mascota o) {
         Connection con;
         PreparedStatement pst;
+        ResultSet rs;
+        AdoptanteDAO adoptantes = new AdoptanteDAO();
         try {
             con = Connector.connect();
             pst = con.prepareStatement("INSERT INTO Mascota"
-                    + " (mascota_id, adoptante_id, nombre,"
+                    + " (adoptante_id, nombre,"
                     + " raza, color, edad, genero, peso,"
                     + " ultimaDesparacitacion, ultimaVacunacion,"
                     + " fechaAdopcion) VALUES"
                     + " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            pst.setInt(1, o.getMascota_id());
-            pst.setInt(2, o.getAdoptante().getAdoptante_id());
-            pst.setString(3, o.getNombre());
-            pst.setString(4, o.getRaza());
-            pst.setString(5, o.getColor());
-            pst.setInt(6, o.getEdad());
-            pst.setBoolean(7, o.getGenero());
-            pst.setDouble(8, o.getPeso());
-            pst.setString(9, o.getUltimaDesparacitacion());
-            pst.setString(10, o.getUltimaVacunacion());
-            pst.setString(11, o.getFechaAdopcion());
+            int adoptante_id = adoptantes.add(o.getAdoptante());
+            pst.setInt(1, adoptante_id);
+            pst.setString(2, o.getNombre());
+            pst.setString(3, o.getRaza());
+            pst.setString(4, o.getColor());
+            pst.setInt(5, o.getEdad());
+            pst.setBoolean(6, o.getGenero());
+            pst.setDouble(7, o.getPeso());
+            pst.setString(8, o.getUltimaDesparacitacion());
+            pst.setString(9, o.getUltimaVacunacion());
+            pst.setString(10, o.getFechaAdopcion());
             pst.executeUpdate();
+            pst = con.prepareStatement("SELECT seq FROM sqlite_sequence WHERE name = \"Mascota\";");
+            rs = pst.executeQuery();
+            int rowid = rs.getInt("seq");
             pst.close();
             con.close();
-            return true;
+            return rowid;
         } catch (SQLException ex) {
             Logger.getLogger(MascotaDAO.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
-            return false;
+            return 0;
         }
     }
 
     @Override
-    public boolean update(Mascota o) {
+    public int update(Mascota o) {
         Connection con;
         PreparedStatement pst;
+        ResultSet rs;
         try {
             con = Connector.connect();
             pst = con.prepareStatement("UPDATE Mascota SET"
@@ -164,13 +166,16 @@ public class MascotaDAO implements DAOInterface<Mascota> {
             pst.setString(10, o.getFechaAdopcion());
             pst.setInt(11, o.getMascota_id());
             pst.executeUpdate();
+            pst = con.prepareStatement("SELECT seq FROM sqlite_sequence WHERE name = \"Mascota\";");
+            rs = pst.executeQuery();
+            int rowid = rs.getInt("seq");
             pst.close();
             con.close();
-            return true;
+            return rowid;
         } catch (SQLException ex) {
             Logger.getLogger(MascotaDAO.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
-            return false;
+            return 0;
         }
     }
 

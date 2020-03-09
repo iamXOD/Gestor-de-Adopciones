@@ -18,9 +18,9 @@ public interface DAOInterface<Object> {
 
     public ObservableList<Object> getAll();
 
-    public boolean add(Object o);
+    public int add(Object o);
 
-    public boolean update(Object o);
+    public int update(Object o);
 
     public boolean delete(int ID);
 }
