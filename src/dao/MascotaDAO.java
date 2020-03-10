@@ -142,6 +142,8 @@ public class MascotaDAO implements DAOInterface<Mascota> {
         ResultSet rs;
         try {
             con = Connector.connect();
+            pst = con.prepareStatement("PRAGMA foreign_keys = ON;");
+            pst.executeUpdate();
             pst = con.prepareStatement("UPDATE Mascota SET"
                     + " adoptante_id = ?,"
                     + " nombre = ?,"
@@ -185,6 +187,8 @@ public class MascotaDAO implements DAOInterface<Mascota> {
         PreparedStatement pst;
         try {
             con = Connector.connect();
+            pst = con.prepareStatement("PRAGMA foreign_keys = ON;");
+            pst.executeUpdate();
             pst = con.prepareStatement("DELETE FROM Mascota WHERE mascota_id = ?");
             pst.setInt(1, ID);
             pst.executeUpdate();

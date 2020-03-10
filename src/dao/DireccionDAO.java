@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Direccion;
@@ -134,6 +132,8 @@ public class DireccionDAO implements DAOInterface<Direccion> {
         ResultSet rs;
         try {
             con = Connector.connect();
+            pst = con.prepareStatement("PRAGMA foreign_keys = ON;");
+            pst.executeUpdate();
             pst = con.prepareStatement("UPDATE Direccion SET"
                     + " callePrincipal = ?,"
                     + " entreCalle = ?,"
@@ -172,6 +172,8 @@ public class DireccionDAO implements DAOInterface<Direccion> {
         PreparedStatement pst;
         try {
             con = Connector.connect();
+            pst = con.prepareStatement("PRAGMA foreign_keys = ON;");
+            pst.executeUpdate();
             pst = con.prepareStatement("DELETE FROM Direccion WHERE direccion_id = ?");
             pst.setInt(1, ID);
             pst.executeUpdate();

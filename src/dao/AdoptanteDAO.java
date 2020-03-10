@@ -128,6 +128,8 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
         ResultSet rs;
         try {
             con = Connector.connect();
+            pst = con.prepareStatement("PRAGMA foreign_keys = ON;");
+            pst.executeUpdate();
             pst = con.prepareStatement("UPDATE Adoptante SET"
                     + " nombre = ?,"
                     + " primerApellido = ?,"
@@ -163,6 +165,8 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
         PreparedStatement pst;
         try {
             con = Connector.connect();
+            pst = con.prepareStatement("PRAGMA foreign_keys = ON;");
+            pst.executeUpdate();
             pst = con.prepareStatement("DELETE FROM Adoptante WHERE adoptante_id = ?");
             pst.setInt(1, ID);
             pst.executeUpdate();
