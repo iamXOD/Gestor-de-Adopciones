@@ -126,6 +126,7 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
         Connection con;
         PreparedStatement pst;
         ResultSet rs;
+        DireccionDAO direcciones = new DireccionDAO();
         try {
             con = Connector.connect();
             pst = con.prepareStatement("PRAGMA foreign_keys = ON;");
@@ -146,6 +147,7 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
             pst.setInt(6, o.getDireccion().getDireccion_id());
             pst.setInt(7, o.getAdoptante_id());
             pst.executeUpdate();
+            direcciones.update(o.getDireccion());
             pst = con.prepareStatement("SELECT seq FROM sqlite_sequence WHERE name = \"Adoptante\";");
             rs = pst.executeQuery();
             int rowid = rs.getInt("seq");

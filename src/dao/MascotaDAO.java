@@ -140,6 +140,7 @@ public class MascotaDAO implements DAOInterface<Mascota> {
         Connection con;
         PreparedStatement pst;
         ResultSet rs;
+        AdoptanteDAO adoptantes = new AdoptanteDAO();
         try {
             con = Connector.connect();
             pst = con.prepareStatement("PRAGMA foreign_keys = ON;");
@@ -168,6 +169,7 @@ public class MascotaDAO implements DAOInterface<Mascota> {
             pst.setString(10, o.getFechaAdopcion());
             pst.setInt(11, o.getMascota_id());
             pst.executeUpdate();
+            adoptantes.update(o.getAdoptante());
             pst = con.prepareStatement("SELECT seq FROM sqlite_sequence WHERE name = \"Mascota\";");
             rs = pst.executeQuery();
             int rowid = rs.getInt("seq");
