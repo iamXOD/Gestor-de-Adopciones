@@ -55,9 +55,47 @@ public class MascotaDAO implements DAOInterface<Mascota> {
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(MascotaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
         }
         return m;
+    }
+
+    @Override
+    public ObservableList<Mascota> search(String param) {
+        Connection con;
+        PreparedStatement pst;
+        ResultSet rs;
+        List aux = new ArrayList<Mascota>();
+        AdoptanteDAO a = new AdoptanteDAO();
+        try {
+            con = Connector.connect();
+            pst = con.prepareStatement("SELECT * FROM Mascota"
+                    + " WHERE (Mascota.nombre like \"%" + param + "%\""
+                    + " OR Mascota.raza like \"%" + param + "%\""
+                    + " OR Mascota.color like \"%" + param + "%\")"
+                    + " ORDER BY mascota_id");
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                Mascota m = new Mascota();
+                m.setAdoptante(a.get(rs.getInt("adoptante_id")));
+                m.setMascota_id(rs.getInt("mascota_id"));
+                m.setNombre(rs.getString("nombre"));
+                m.setRaza(rs.getString("raza"));
+                m.setColor(rs.getString("color"));
+                m.setEdad(rs.getInt("edad"));
+                m.setGenero(rs.getBoolean("genero"));
+                m.setPeso(rs.getDouble("peso"));
+                m.setUltimaDesparacitacion(rs.getString("ultimaDesparacitacion"));
+                m.setUltimaVacunacion(rs.getString("ultimaVacunacion"));
+                m.setFechaAdopcion(rs.getString("fechaAdopcion"));
+                aux.add(m);
+            }
+            pst.close();
+            rs.close();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(MascotaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return FXCollections.observableArrayList(aux);
     }
 
     @Override
@@ -91,7 +129,6 @@ public class MascotaDAO implements DAOInterface<Mascota> {
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(MascotaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
         }
         return FXCollections.observableArrayList(aux);
     }
@@ -104,7 +141,7 @@ public class MascotaDAO implements DAOInterface<Mascota> {
         AdoptanteDAO adoptantes = new AdoptanteDAO();
         try {
             con = Connector.connect();
-            pst = con.prepareStatement("INSERT INTO Mascota"
+            pst = con.prepareStatement("INSERT OR REPLACE INTO Mascota"
                     + " (adoptante_id, nombre,"
                     + " raza, color, edad, genero, peso,"
                     + " ultimaDesparacitacion, ultimaVacunacion,"
@@ -130,7 +167,6 @@ public class MascotaDAO implements DAOInterface<Mascota> {
             return rowid;
         } catch (SQLException ex) {
             Logger.getLogger(MascotaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
             return 0;
         }
     }
@@ -145,7 +181,7 @@ public class MascotaDAO implements DAOInterface<Mascota> {
             con = Connector.connect();
             pst = con.prepareStatement("PRAGMA foreign_keys = ON;");
             pst.executeUpdate();
-            pst = con.prepareStatement("UPDATE Mascota SET"
+            pst = con.prepareStatement("UPDATE OR IGNORE Mascota SET"
                     + " adoptante_id = ?,"
                     + " nombre = ?,"
                     + " raza = ?,"
@@ -178,7 +214,6 @@ public class MascotaDAO implements DAOInterface<Mascota> {
             return rowid;
         } catch (SQLException ex) {
             Logger.getLogger(MascotaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
             return 0;
         }
     }
@@ -199,7 +234,6 @@ public class MascotaDAO implements DAOInterface<Mascota> {
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(MascotaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
             return false;
         }
     }

@@ -51,9 +51,50 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(AdoptanteDAO.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
         }
         return a;
+    }
+
+    @Override
+    public ObservableList<Adoptante> search(String param) {
+        Connection con;
+        PreparedStatement pst;
+        ResultSet rs;
+        List aux = new ArrayList<Adoptante>();
+        DireccionDAO d = new DireccionDAO();
+        try {
+            con = Connector.connect();
+            pst = con.prepareStatement("SELECT * FROM Adoptante LEFT JOIN Direccion USING(direccion_id)"
+                    + "WHERE (Adoptante.nombre like \"%" + param + "%\""
+                    + "OR Adoptante.primerApellido like \"%" + param + "%\""
+                    + "OR Adoptante.segundoApellido like \"%" + param + "%\""
+                    + "OR Direccion.callePrincipal like \"%" + param + "%\""
+                    + "OR Direccion.entreCalle like \"%" + param + "%\""
+                    + "OR Direccion.yCalle like \"%" + param + "%\""
+                    + "OR Direccion.localidad like \"%" + param + "%\""
+                    + "OR Direccion.municipio like \"%" + param + "%\""
+                    + "OR Direccion.provincia like \"%" + param + "%\")"
+                    + "ORDER BY adoptante_id");
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                Adoptante a = new Adoptante();
+                a.setAdoptante_id(rs.getInt("adoptante_id"));
+                a.setNombre(rs.getString("nombre"));
+                a.setPrimerApellido(rs.getString("primerApellido"));
+                a.setSegundoApellido(rs.getString("segundoApellido"));
+                a.setCiOPasaporte(rs.getString("ciOPasaporte"));
+                a.setGenero(rs.getBoolean("genero"));
+                a.setDireccion(d.get(rs.getInt("direccion_id")));
+                aux.add(a);
+            }
+            pst.close();
+            rs.close();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AdoptanteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return FXCollections.observableArrayList(aux);
+
     }
 
     @Override
@@ -83,7 +124,6 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(AdoptanteDAO.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
         }
         return FXCollections.observableArrayList(aux);
     }
@@ -96,7 +136,7 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
         DireccionDAO direcciones = new DireccionDAO();
         try {
             con = Connector.connect();
-            pst = con.prepareStatement("INSERT INTO Adoptante"
+            pst = con.prepareStatement("INSERT OR REPLACE INTO Adoptante"
                     + " (nombre, primerApellido,"
                     + " segundoApellido, ciOPasaporte, genero, direccion_id)"
                     + "VALUES (?, ?, ?, ?, ?, ?)");
@@ -116,7 +156,6 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
             return rowid;
         } catch (SQLException ex) {
             Logger.getLogger(AdoptanteDAO.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
             return 0;
         }
     }
@@ -131,7 +170,7 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
             con = Connector.connect();
             pst = con.prepareStatement("PRAGMA foreign_keys = ON;");
             pst.executeUpdate();
-            pst = con.prepareStatement("UPDATE Adoptante SET"
+            pst = con.prepareStatement("UPDATE OR IGNORE Adoptante SET"
                     + " nombre = ?,"
                     + " primerApellido = ?,"
                     + " segundoApellido = ?,"
@@ -156,7 +195,6 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
             return rowid;
         } catch (SQLException ex) {
             Logger.getLogger(AdoptanteDAO.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
             return 0;
         }
     }
@@ -177,7 +215,6 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(AdoptanteDAO.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
             return false;
         }
     }

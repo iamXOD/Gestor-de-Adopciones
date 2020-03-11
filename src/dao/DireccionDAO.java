@@ -52,9 +52,46 @@ public class DireccionDAO implements DAOInterface<Direccion> {
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(DireccionDAO.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
         }
         return d;
+    }
+
+    @Override
+    public ObservableList<Direccion> search(String param) {
+        Connection con;
+        PreparedStatement pst;
+        ResultSet rs;
+        List<Direccion> aux = new ArrayList();
+        try {
+            con = Connector.connect();
+            pst = con.prepareStatement("SELECT * FROM Direccion"
+                    + " WHERE (Direccion.callePrincipal like \"%" + param + "%\""
+                    + " OR Direccion.entreCalle like \"%" + param + "%\""
+                    + " OR Direccion.yCalle like \"%" + param + "%\""
+                    + " OR Direccion.localidad like \"%" + param + "%\""
+                    + " OR Direccion.municipio like \"%" + param + "%\""
+                    + " OR Direccion.provincia like \"%" + param + "%\")"
+                    + " ORDER BY direccion_id");
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                Direccion d = new Direccion();
+                d.setDireccion_id(rs.getInt("direccion_id"));
+                d.setCallePrincipal(rs.getString("callePrincipal"));
+                d.setEntreCalle(rs.getString("entreCalle"));
+                d.setyCalle(rs.getString("yCalle"));
+                d.setNo(rs.getInt("no"));
+                d.setLocalidad(rs.getString("localidad"));
+                d.setMunicipio(rs.getString("municipio"));
+                d.setProvincia(rs.getString("provincia"));
+                aux.add(d);
+            }
+            pst.close();
+            rs.close();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DireccionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return FXCollections.observableArrayList(aux);
     }
 
     @Override
@@ -85,7 +122,6 @@ public class DireccionDAO implements DAOInterface<Direccion> {
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(DireccionDAO.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
         }
         return FXCollections.observableArrayList(aux);
     }
@@ -98,7 +134,7 @@ public class DireccionDAO implements DAOInterface<Direccion> {
         try {
             con = Connector.connect();
             pst = con.prepareStatement(
-                    "INSERT INTO Direccion"
+                    "INSERT OR REPLACE INTO Direccion"
                     + " (callePrincipal,"
                     + " entreCalle, yCalle, no, localidad,"
                     + " municipio, provincia) "
@@ -120,7 +156,6 @@ public class DireccionDAO implements DAOInterface<Direccion> {
             return rowid;
         } catch (SQLException ex) {
             Logger.getLogger(DireccionDAO.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
             return 0;
         }
     }
@@ -134,7 +169,7 @@ public class DireccionDAO implements DAOInterface<Direccion> {
             con = Connector.connect();
             pst = con.prepareStatement("PRAGMA foreign_keys = ON;");
             pst.executeUpdate();
-            pst = con.prepareStatement("UPDATE Direccion SET"
+            pst = con.prepareStatement("UPDATE OR IGNORE Direccion SET"
                     + " callePrincipal = ?,"
                     + " entreCalle = ?,"
                     + " yCalle = ?,"
@@ -161,7 +196,6 @@ public class DireccionDAO implements DAOInterface<Direccion> {
             return rowid;
         } catch (SQLException ex) {
             Logger.getLogger(DireccionDAO.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
             return 0;
         }
     }
@@ -182,7 +216,6 @@ public class DireccionDAO implements DAOInterface<Direccion> {
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(DireccionDAO.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
             return false;
         }
     }

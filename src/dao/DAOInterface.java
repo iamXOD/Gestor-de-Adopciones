@@ -16,6 +16,8 @@ public interface DAOInterface<Object> {
 
     public Object get(int ID);
 
+    public ObservableList<Object> search(String param);
+
     public ObservableList<Object> getAll();
 
     public int add(Object o);
