@@ -20,7 +20,7 @@ public class Connector {
 
     private static Connection connect;
 
-    public static String url = "db/storage.db";
+    public static String url = "storage.db";
 
     public static Connection connect() {
         connect = null;
@@ -51,15 +51,15 @@ public class Connector {
         PreparedStatement pst;
         try {
             pst = Connector.connect().prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS Direccion ("
-                    + "	direccion_id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
-                    + "	callePrincipal	TEXT NOT NULL,"
-                    + "	entreCalle	TEXT,"
-                    + "	yCalle	TEXT,"
-                    + "	no	INTEGER NOT NULL,"
-                    + "	localidad	TEXT NOT NULL,"
-                    + "	municipio	TEXT NOT NULL,"
-                    + "	provincia	TEXT NOT NULL"
+                    "CREATE TABLE IF NOT EXISTS \"Direccion\" (\n"
+                    + "	\"direccion_id\"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n"
+                    + "	\"callePrincipal\"	TEXT NOT NULL,\n"
+                    + "	\"entreCalle\"	TEXT,\n"
+                    + "	\"yCalle\"	TEXT,\n"
+                    + "	\"no\"	INTEGER NOT NULL,\n"
+                    + "	\"localidad\"	TEXT NOT NULL,\n"
+                    + "	\"municipio\"	TEXT NOT NULL,\n"
+                    + "	\"provincia\"	TEXT NOT NULL\n"
                     + ");");
             pst.executeUpdate();
             pst.close();
@@ -76,15 +76,16 @@ public class Connector {
         PreparedStatement pst;
         try {
             pst = Connector.connect().prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS Adoptante ("
-                    + "	adoptante_id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
-                    + "	nombre	TEXT NOT NULL,"
-                    + "	primerApellido	TEXT NOT NULL,"
-                    + "	segundoApellido	TEXT NOT NULL,"
-                    + "	ciOPasaporte	TEXT NOT NULL UNIQUE,"
-                    + "	genero	INTEGER,"
-                    + "	direccion_id	INTEGER,"
-                    + "	FOREIGN KEY(direccion_id) REFERENCES Direccion(direccion_id) ON UPDATE CASCADE"
+                    "CREATE TABLE IF NOT EXISTS \"Adoptante\" (\n"
+                    + "	\"adoptante_id\"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n"
+                    + "	\"nombre\"	TEXT NOT NULL,\n"
+                    + "	\"primerApellido\"	TEXT NOT NULL,\n"
+                    + "	\"segundoApellido\"	TEXT NOT NULL,\n"
+                    + "	\"ciOPasaporte\"	TEXT NOT NULL UNIQUE,\n"
+                    + "	\"genero\"	INTEGER,\n"
+                    + "	\"direccion_id\"	INTEGER,\n"
+                    + "	FOREIGN KEY(\"direccion_id\") REFERENCES \"Direccion\"(\"direccion_id\")"
+                    + " ON UPDATE CASCADE ON DELETE CASCADE\n"
                     + ");");
             pst.executeUpdate();
             pst.close();
@@ -100,19 +101,20 @@ public class Connector {
         PreparedStatement pst;
         try {
             pst = Connector.connect().prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS Mascota ("
-                    + "	mascota_id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
-                    + "	adoptante_id	INTEGER,"
-                    + "	nombre	TEXT NOT NULL,"
-                    + "	raza	TEXT,"
-                    + "	color	TEXT,"
-                    + "	edad	INTEGER,"
-                    + "	genero	INTEGER,"
-                    + "	peso	REAL,"
-                    + "	ultimaDesparacitacion	TEXT,"
-                    + "	ultimaVacunacion	TEXT,"
-                    + "	fechaAdopcion	TEXT,"
-                    + "	FOREIGN KEY(adoptante_id) REFERENCES Adoptante(adoptante_id) ON UPDATE CASCADE"
+                    "CREATE TABLE IF NOT EXISTS \"Mascota\" (\n"
+                    + "	\"mascota_id\"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,\n"
+                    + "	\"adoptante_id\"	INTEGER,\n"
+                    + "	\"nombre\"	TEXT NOT NULL,\n"
+                    + "	\"raza\"	TEXT,\n"
+                    + "	\"color\"	TEXT,\n"
+                    + "	\"edad\"	INTEGER,\n"
+                    + "	\"genero\"	INTEGER,\n"
+                    + "	\"peso\"	REAL,\n"
+                    + "	\"ultimaDesparacitacion\"	TEXT,\n"
+                    + "	\"ultimaVacunacion\"	TEXT,\n"
+                    + "	\"fechaAdopcion\"	TEXT,\n"
+                    + "	FOREIGN KEY(\"adoptante_id\") REFERENCES \"Adoptante\"(\"adoptante_id\")"
+                    + " ON UPDATE CASCADE ON DELETE CASCADE\n"
                     + ");");
             pst.executeUpdate();
             pst.close();
@@ -141,7 +143,6 @@ public class Connector {
         try {
             con = Connector.connect();
             for (String str : indexes) {
-                pst = null;
                 pst = con.prepareStatement(str);
                 pst.executeUpdate();
                 pst.close();
