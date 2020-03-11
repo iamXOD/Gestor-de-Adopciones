@@ -24,7 +24,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Lassie" />
+                  <TextField fx:id="nombre_tfield" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Lassie" />
                </children>
             </HBox>
             <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="300.0" spacing="10.0">
@@ -34,7 +34,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <ComboBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Juan Peréz García" />
+                  <ComboBox fx:id="adoptante_id_cmbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="300.0" spacing="10.0">
@@ -44,7 +44,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <DatePicker maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" showWeekNumbers="true" HBox.hgrow="NEVER" />
+                  <DatePicker fx:id="fechaAdopcion_dtpicker" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" showWeekNumbers="true" HBox.hgrow="NEVER" />
                </children>
             </HBox>
             <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="300.0" spacing="10.0">
@@ -54,7 +54,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <DatePicker maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+                  <DatePicker fx:id="ultimaDesparacitacion_dtpicker" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" showWeekNumbers="true" />
                </children>
             </HBox>
             <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="300.0" spacing="10.0">
@@ -64,81 +64,86 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <DatePicker maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+                  <DatePicker fx:id="ultimaVacunacion_dtpicker" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" showWeekNumbers="true" />
                </children>
             </HBox>
          </children>
       </VBox>
-      <VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="300.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="250.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="300.0" spacing="10.0" VBox.vgrow="NEVER">
+            <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="250.0" spacing="10.0" VBox.vgrow="NEVER">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Raza:">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Rough Collie" />
+                  <TextField fx:id="raza_tfield" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Rough Collie" />
                </children>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="300.0" spacing="10.0">
+            <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="250.0" spacing="10.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Color:">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Blanco" />
+                  <TextField fx:id="color_tfield" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Blanco" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="300.0" spacing="10.0">
+            <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="250.0" spacing="10.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Edad:">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="6" />
+                  <TextField fx:id="edad_tfield" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="6" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="300.0" spacing="10.0">
+            <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="250.0" spacing="10.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Peso (Kg):">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="23" />
+                  <TextField fx:id="peso_tfield" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="23" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="300.0" spacing="10.0">
+            <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="250.0" spacing="10.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Género:">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <RadioButton mnemonicParsing="false" text="Femenino">
+                  <RadioButton fx:id="fem_rbut" mnemonicParsing="false" text="Femenino">
                      <toggleGroup>
                         <ToggleGroup fx:id="genero" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Masculino" toggleGroup="$genero" />
+                  <RadioButton fx:id="masc_rbut" mnemonicParsing="false" text="Masculino" toggleGroup="$genero" />
                </children>
             </HBox>
          </children>
       </VBox>
-      <HBox alignment="CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="600.0" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="350.0">
+      <HBox alignment="CENTER_LEFT" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="600.0" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="350.0">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" defaultButton="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="Aceptar" textOverrun="WORD_ELLIPSIS" HBox.hgrow="NEVER">
+            <Label fx:id="error_lbl" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="250.0">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+            <Button alignment="CENTER" contentDisplay="CENTER" defaultButton="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#save" prefHeight="35.0" prefWidth="80.0" text="Aceptar" textOverrun="WORD_ELLIPSIS" HBox.hgrow="NEVER">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" cancelButton="true" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="Cancelar" textOverrun="WORD_ELLIPSIS" HBox.hgrow="NEVER">
+            <Button alignment="CENTER" cancelButton="true" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#quit" prefHeight="35.0" prefWidth="80.0" text="Cancelar" textOverrun="WORD_ELLIPSIS" HBox.hgrow="NEVER">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

@@ -6,7 +6,6 @@
 package controller;
 
 import dao.AdoptanteDAO;
-import dao.DireccionDAO;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -37,12 +36,12 @@ public class AddAdoptanteController implements Initializable {
 
     //Properties
     private AdoptanteDAO adoptantes;
-    private DireccionDAO direcciones;
     private Adoptante adoptante;
     private Direccion direccion;
     private boolean editing;
     private SimpleStringProperty error;
     private Queue<String> errors;
+    private Initializable parentstage;
 
     @FXML
     private TextField nombre_tfield, primerApellido_tfield,
@@ -71,6 +70,10 @@ public class AddAdoptanteController implements Initializable {
         fillFields();
     }
 
+    public void setParent(Initializable c) {
+        this.parentstage = c;
+    }
+
     private void fillFields() {
         nombre_tfield.setText(adoptante.getNombre());
         primerApellido_tfield.setText(adoptante.getPrimerApellido());
@@ -95,7 +98,7 @@ public class AddAdoptanteController implements Initializable {
             errors.add("Debe rellenar el nombre");
             ready = false;
         }
-        if (nombre_tfield.getText().matches(".*[^a-zA-Zñáéíóú_\\-].*")) {
+        if (nombre_tfield.getText().matches(".*[^a-zA-Zñáéíóú_\\- ].*")) {
             errors.add("El nombre solo debe tener letras");
             ready = false;
         }
@@ -155,7 +158,9 @@ public class AddAdoptanteController implements Initializable {
     }
 
     private void InitCmboxs() {
-        provincia_cmbox.getSelectionModel().selectedItemProperty().addListener(provinciaChange());
+        provincia_cmbox.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+            setMunicipios(newValue.intValue());
+        });
         provincia_cmbox.setItems(FXCollections.observableArrayList(Arrays.asList(Direccion.getProvincias())));
         provincia_cmbox.getSelectionModel().selectFirst();
     }
@@ -174,14 +179,6 @@ public class AddAdoptanteController implements Initializable {
                 error.set("CI solo debe contener numeros");
             }
         };
-    }
-
-    private ChangeListener<String> provinciaChange() {
-        ChangeListener<String> aux = (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            int index = provincia_cmbox.getSelectionModel().getSelectedIndex();
-            setMunicipios(index);
-        };
-        return aux;
     }
 
     @FXML
@@ -205,11 +202,19 @@ public class AddAdoptanteController implements Initializable {
             direccion.setMunicipio(municipio_cmbox.getValue());
             direccion.setProvincia(provincia_cmbox.getValue());
             adoptante.setDireccion(direccion);
+            int rowid;
             if (editing) {
-                adoptantes.update(adoptante);
+                rowid = adoptantes.update(adoptante);
             } else {
-                adoptantes.add(adoptante);
+                rowid = adoptantes.add(adoptante);
             }
+            adoptante.setAdoptante_id(rowid);
+            if (parentstage instanceof MainViewController) {
+                ((MainViewController) this.parentstage).refreshTable();
+            } else if (parentstage instanceof AddMascotaController) {
+                ((AddMascotaController) parentstage).fillCMBox(adoptante);
+            }
+
             this.quit(new ActionEvent());
         } else {
             error.set(errors.peek());
@@ -235,7 +240,6 @@ public class AddAdoptanteController implements Initializable {
         error_lbl.textProperty().bind(error);
         errors = new LinkedList<>();
         adoptantes = new AdoptanteDAO();
-        direcciones = new DireccionDAO();
         InitCmboxs();
         initNumsField();
 
