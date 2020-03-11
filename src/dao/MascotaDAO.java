@@ -109,7 +109,7 @@ public class MascotaDAO implements DAOInterface<Mascota> {
                     + " raza, color, edad, genero, peso,"
                     + " ultimaDesparacitacion, ultimaVacunacion,"
                     + " fechaAdopcion) VALUES"
-                    + " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    + " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             int adoptante_id = adoptantes.add(o.getAdoptante());
             pst.setInt(1, adoptante_id);
             pst.setString(2, o.getNombre());
