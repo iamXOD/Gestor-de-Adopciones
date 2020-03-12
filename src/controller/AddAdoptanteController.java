@@ -84,7 +84,7 @@ public class AddAdoptanteController implements Initializable {
         callePrincipal_tfield.setText(direccion.getCallePrincipal());
         entreCalle_tfield.setText(direccion.getEntreCalle());
         yCalle_tfield.setText(direccion.getyCalle());
-        no_tfield.setText(Integer.toString(direccion.getNo()));
+        no_tfield.setText(direccion.getNo());
         localidad_tfield.setText(direccion.getLocalidad());
         provincia_cmbox.getSelectionModel().select(direccion.getProvincia());
         municipio_cmbox.getSelectionModel().select(direccion.getMunicipio());
@@ -197,7 +197,7 @@ public class AddAdoptanteController implements Initializable {
             direccion.setCallePrincipal(callePrincipal_tfield.getText());
             direccion.setEntreCalle(entreCalle_tfield.getText());
             direccion.setyCalle(yCalle_tfield.getText());
-            direccion.setNo(Integer.parseInt(no_tfield.getText()));
+            direccion.setNo(no_tfield.getText());
             direccion.setLocalidad(localidad_tfield.getText());
             direccion.setMunicipio(municipio_cmbox.getValue());
             direccion.setProvincia(provincia_cmbox.getValue());
