@@ -5,11 +5,8 @@
  */
 package model;
 
-import com.sun.javafx.collections.ElementObservableListDecorator;
-import java.util.ArrayList;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
 
 /**
  *
@@ -23,7 +20,7 @@ public class Direccion {
     private SimpleStringProperty callePrincipal;
     private SimpleStringProperty entreCalle;
     private SimpleStringProperty yCalle;
-    private SimpleIntegerProperty no;
+    private SimpleStringProperty no;
     private SimpleStringProperty localidad;
     private SimpleStringProperty municipio;
     private SimpleStringProperty provincia;
@@ -51,12 +48,12 @@ public class Direccion {
         "Ciego de Avila", "Camaguey", "Las Tunas", "Holguin", "Granma",
         "Santiago de Cuba", "Guantanamo", "Isla de la Juventud"};
 
-    public Direccion(int direccion_id, String callePrincipal, String entreCalle, String yCalle, int no, String localidad, String municipio, String provincia) {
+    public Direccion(int direccion_id, String callePrincipal, String entreCalle, String yCalle, String no, String localidad, String municipio, String provincia) {
         this.direccion_id = new SimpleIntegerProperty(direccion_id);
         this.callePrincipal = new SimpleStringProperty(callePrincipal);
         this.entreCalle = new SimpleStringProperty(entreCalle);
         this.yCalle = new SimpleStringProperty(yCalle);
-        this.no = new SimpleIntegerProperty(no);
+        this.no = new SimpleStringProperty(no);
         this.localidad = new SimpleStringProperty(localidad);
         this.municipio = new SimpleStringProperty(municipio);
         this.provincia = new SimpleStringProperty(provincia);
@@ -113,16 +110,16 @@ public class Direccion {
         this.yCalle = new SimpleStringProperty(yCalle);
     }
 
-    public int getNo() {
+    public String getNo() {
         return no.get();
     }
 
-    public SimpleIntegerProperty noProperty() {
+    public SimpleStringProperty noProperty() {
         return no;
     }
 
-    public void setNo(int no) {
-        this.no = new SimpleIntegerProperty(no);
+    public void setNo(String no) {
+        this.no = new SimpleStringProperty(no);
     }
 
     public String getLocalidad() {
