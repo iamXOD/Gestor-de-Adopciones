@@ -40,36 +40,10 @@ public class Connector {
     }
 
     public static void createSchema() {
-        createDireccion();
         createAdoptante();
         createMascota();
         createIndexes();
         createAdopcionView();
-    }
-
-    private static boolean createDireccion() {
-        PreparedStatement pst;
-        try {
-            pst = Connector.connect().prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS \"Direccion\" (\n"
-                    + "	\"direccion_id\"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n"
-                    + "	\"callePrincipal\"	TEXT NOT NULL,\n"
-                    + "	\"entreCalle\"	TEXT,\n"
-                    + "	\"yCalle\"	TEXT,\n"
-                    + "	\"no\"	INTEGER NOT NULL,\n"
-                    + "	\"localidad\"	TEXT NOT NULL,\n"
-                    + "	\"municipio\"	TEXT NOT NULL,\n"
-                    + "	\"provincia\"	TEXT NOT NULL\n"
-                    + ");");
-            pst.executeUpdate();
-            pst.close();
-            Connector.close();
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(Connector.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
-        }
-        return false;
     }
 
     private static boolean createAdoptante() {
@@ -83,9 +57,13 @@ public class Connector {
                     + "	\"segundoApellido\"	TEXT NOT NULL,\n"
                     + "	\"ciOPasaporte\"	TEXT NOT NULL UNIQUE,\n"
                     + "	\"genero\"	INTEGER,\n"
-                    + "	\"direccion_id\"	INTEGER,\n"
-                    + "	FOREIGN KEY(\"direccion_id\") REFERENCES \"Direccion\"(\"direccion_id\")"
-                    + " ON UPDATE CASCADE ON DELETE CASCADE\n"
+                    + "	\"callePrincipal\"	TEXT NOT NULL,\n"
+                    + "	\"entreCalle\"	TEXT,\n"
+                    + "	\"yCalle\"	TEXT,\n"
+                    + "	\"no\"	TEXT NOT NULL,\n"
+                    + "	\"localidad\"	TEXT NOT NULL,\n"
+                    + "	\"municipio\"	TEXT NOT NULL,\n"
+                    + "	\"provincia\"	TEXT NOT NULL\n"
                     + ");");
             pst.executeUpdate();
             pst.close();
@@ -132,9 +110,6 @@ public class Connector {
             "CREATE INDEX IF NOT EXISTS mascota_raza ON Mascota (raza);",
             "CREATE INDEX IF NOT EXISTS mascota_adoptante ON Mascota (adoptante_id DESC);",
             "CREATE INDEX IF NOT EXISTS mascota_id ON Mascota (mascota_id DESC);",
-            "CREATE INDEX IF NOT EXISTS direccion_no ON Direccion (no);",
-            "CREATE INDEX IF NOT EXISTS direccion_id ON Direccion (direccion_id DESC);",
-            "CREATE INDEX IF NOT EXISTS adoptante_direccion ON Adoptante (direccion_id DESC);",
             "CREATE INDEX IF NOT EXISTS adoptante_ci ON Adoptante (ciOPasaporte);",
             "CREATE INDEX IF NOT EXISTS adoptante_id ON Adoptante (adoptante_id DESC);"
         };
