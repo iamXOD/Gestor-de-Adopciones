@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Adoptante;
+import model.Direccion;
 
 /**
  *
@@ -30,7 +31,6 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
         PreparedStatement pst;
         ResultSet rs;
         Adoptante a = Adoptante.EMPTY;
-        DireccionDAO d = new DireccionDAO();
         try {
             con = Connector.connect();
             pst = con.prepareStatement("SELECT * FROM Adoptante WHERE adoptante_id = ? LIMIT 1");
@@ -44,7 +44,15 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
                 a.setSegundoApellido(rs.getString("segundoApellido"));
                 a.setCiOPasaporte(rs.getString("ciOPasaporte"));
                 a.setGenero(rs.getBoolean("genero"));
-                a.setDireccion(d.get(rs.getInt("direccion_id")));
+                Direccion direccion = new Direccion();
+                direccion.setCallePrincipal(rs.getString("callePrincipal"));
+                direccion.setEntreCalle(rs.getString("entreCalle"));
+                direccion.setyCalle(rs.getString("yCalle"));
+                direccion.setNo(rs.getString("no"));
+                direccion.setLocalidad(rs.getString("localidad"));
+                direccion.setMunicipio(rs.getString("municipio"));
+                direccion.setProvincia(rs.getString("provincia"));
+                a.setDireccion(direccion);
             }
             pst.close();
             rs.close();
@@ -61,20 +69,22 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
         PreparedStatement pst;
         ResultSet rs;
         List aux = new ArrayList<Adoptante>();
-        DireccionDAO d = new DireccionDAO();
         try {
             con = Connector.connect();
-            pst = con.prepareStatement("SELECT * FROM Adoptante LEFT JOIN Direccion USING(direccion_id)"
-                    + "WHERE (Adoptante.nombre like \"%" + param + "%\""
-                    + "OR Adoptante.primerApellido like \"%" + param + "%\""
-                    + "OR Adoptante.segundoApellido like \"%" + param + "%\""
-                    + "OR Direccion.callePrincipal like \"%" + param + "%\""
-                    + "OR Direccion.entreCalle like \"%" + param + "%\""
-                    + "OR Direccion.yCalle like \"%" + param + "%\""
-                    + "OR Direccion.localidad like \"%" + param + "%\""
-                    + "OR Direccion.municipio like \"%" + param + "%\""
-                    + "OR Direccion.provincia like \"%" + param + "%\")"
-                    + "ORDER BY adoptante_id");
+            pst = con.prepareStatement("SELECT * FROM Adoptante"
+                    + " WHERE (nombre like \"%" + param + "%\""
+                    + " OR primerApellido like \"%" + param + "%\""
+                    + " OR segundoApellido like \"%" + param + "%\""
+                    + " OR ciOPasaporte like \"%" + param + "%\""
+                    + " OR genero like \"%" + param + "%\""
+                    + " OR callePrincipal like \"%" + param + "%\""
+                    + " OR entreCalle like \"%" + param + "%\""
+                    + " OR yCalle like \"%" + param + "%\""
+                    + " OR no like \"%" + param + "%\""
+                    + " OR localidad like \"%" + param + "%\""
+                    + " OR municipio like \"%" + param + "%\""
+                    + " OR provincia like \"%" + param + "%\")"
+                    + " ORDER BY adoptante_id");
             rs = pst.executeQuery();
             while (rs.next()) {
                 Adoptante a = new Adoptante();
@@ -84,7 +94,15 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
                 a.setSegundoApellido(rs.getString("segundoApellido"));
                 a.setCiOPasaporte(rs.getString("ciOPasaporte"));
                 a.setGenero(rs.getBoolean("genero"));
-                a.setDireccion(d.get(rs.getInt("direccion_id")));
+                Direccion direccion = new Direccion();
+                direccion.setCallePrincipal(rs.getString("callePrincipal"));
+                direccion.setEntreCalle(rs.getString("entreCalle"));
+                direccion.setyCalle(rs.getString("yCalle"));
+                direccion.setNo(rs.getString("no"));
+                direccion.setLocalidad(rs.getString("localidad"));
+                direccion.setMunicipio(rs.getString("municipio"));
+                direccion.setProvincia(rs.getString("provincia"));
+                a.setDireccion(direccion);
                 aux.add(a);
             }
             pst.close();
@@ -103,7 +121,6 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
         PreparedStatement pst;
         ResultSet rs;
         List aux = new ArrayList<Adoptante>();
-        DireccionDAO d = new DireccionDAO();
         try {
             con = Connector.connect();
             pst = con.prepareStatement("SELECT * FROM Adoptante ORDER BY adoptante_id");
@@ -116,7 +133,15 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
                 a.setSegundoApellido(rs.getString("segundoApellido"));
                 a.setCiOPasaporte(rs.getString("ciOPasaporte"));
                 a.setGenero(rs.getBoolean("genero"));
-                a.setDireccion(d.get(rs.getInt("direccion_id")));
+                Direccion direccion = new Direccion();
+                direccion.setCallePrincipal(rs.getString("callePrincipal"));
+                direccion.setEntreCalle(rs.getString("entreCalle"));
+                direccion.setyCalle(rs.getString("yCalle"));
+                direccion.setNo(rs.getString("no"));
+                direccion.setLocalidad(rs.getString("localidad"));
+                direccion.setMunicipio(rs.getString("municipio"));
+                direccion.setProvincia(rs.getString("provincia"));
+                a.setDireccion(direccion);
                 aux.add(a);
             }
             pst.close();
@@ -133,20 +158,26 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
         Connection con;
         PreparedStatement pst;
         ResultSet rs;
-        DireccionDAO direcciones = new DireccionDAO();
         try {
             con = Connector.connect();
             pst = con.prepareStatement("INSERT OR REPLACE INTO Adoptante"
-                    + " (nombre, primerApellido,"
-                    + " segundoApellido, ciOPasaporte, genero, direccion_id)"
-                    + "VALUES (?, ?, ?, ?, ?, ?)");
+                    + "(nombre, primerApellido, segundoApellido,"
+                    + " ciOPasaporte, genero, callePrincipal, entreCalle, yCalle,"
+                    + " no, localidad, municipio, provincia)"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             pst.setString(1, o.getNombre());
             pst.setString(2, o.getPrimerApellido());
             pst.setString(3, o.getSegundoApellido());
             pst.setString(4, o.getCiOPasaporte());
             pst.setBoolean(5, o.getGenero());
-            int direccion_id = direcciones.add(o.getDireccion());
-            pst.setInt(6, direccion_id);
+            Direccion direccion = o.getDireccion();
+            pst.setString(6, direccion.getCallePrincipal());
+            pst.setString(7, direccion.getEntreCalle());
+            pst.setString(8, direccion.getyCalle());
+            pst.setString(9, direccion.getNo());
+            pst.setString(10, direccion.getLocalidad());
+            pst.setString(11, direccion.getMunicipio());
+            pst.setString(12, direccion.getProvincia());
             pst.executeUpdate();
             pst = con.prepareStatement("SELECT seq FROM sqlite_sequence WHERE name = \"Adoptante\";");
             rs = pst.executeQuery();
@@ -165,7 +196,6 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
         Connection con;
         PreparedStatement pst;
         ResultSet rs;
-        DireccionDAO direcciones = new DireccionDAO();
         try {
             con = Connector.connect();
             pst = con.prepareStatement("PRAGMA foreign_keys = ON;");
@@ -176,17 +206,29 @@ public class AdoptanteDAO implements DAOInterface<Adoptante> {
                     + " segundoApellido = ?,"
                     + " ciOPasaporte = ?,"
                     + " genero = ?,"
-                    + " direccion_id = ?"
+                    + " callePrincipal = ?,"
+                    + "	entreCalle = ?,"
+                    + "	yCalle = ?,"
+                    + "	no = ?,"
+                    + "	localidad = ?,"
+                    + "	municipio = ?,"
+                    + "	provincia = ?"
                     + " WHERE adoptante_id = ?");
             pst.setString(1, o.getNombre());
             pst.setString(2, o.getPrimerApellido());
             pst.setString(3, o.getSegundoApellido());
             pst.setString(4, o.getCiOPasaporte());
             pst.setBoolean(5, o.getGenero());
-            pst.setInt(6, o.getDireccion().getDireccion_id());
-            pst.setInt(7, o.getAdoptante_id());
+            Direccion direccion = o.getDireccion();
+            pst.setString(6, direccion.getCallePrincipal());
+            pst.setString(7, direccion.getEntreCalle());
+            pst.setString(8, direccion.getyCalle());
+            pst.setString(9, direccion.getNo());
+            pst.setString(10, direccion.getLocalidad());
+            pst.setString(11, direccion.getMunicipio());
+            pst.setString(12, direccion.getProvincia());
+            pst.setInt(13, o.getAdoptante_id());
             pst.executeUpdate();
-            direcciones.update(o.getDireccion());
             pst = con.prepareStatement("SELECT seq FROM sqlite_sequence WHERE name = \"Adoptante\";");
             rs = pst.executeQuery();
             int rowid = rs.getInt("seq");
