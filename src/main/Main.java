@@ -5,18 +5,12 @@
  */
 package main;
 
-import auxiliar.Connector;
-import controller.MainViewController;
-import dao.AdoptanteDAO;
-import dao.MascotaDAO;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import model.Adoptante;
-import model.Mascota;
 
 /**
  *
@@ -24,42 +18,21 @@ import model.Mascota;
  */
 public class Main extends Application {
 
-    ObservableList<Mascota> mascotas;
-    ObservableList<Adoptante> adoptantes;
-
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Connector.createSchema();
         launch(args);
     }
 
     @Override
-    public void init() {
-        MascotaDAO m = new MascotaDAO();
-        AdoptanteDAO a = new AdoptanteDAO();
-        mascotas = m.getAll();
-        adoptantes = a.getAll();
-    }
-
-    @Override
     public void start(Stage stage) throws Exception {
-//        Parent root = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
-//        Scene scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.setTitle("Gestor de Adopciones");
-//        stage.show();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainView.fxml"));
-
         Parent sceneMain = loader.load();
-
-        MainViewController controller = loader.<MainViewController>getController();
-        controller.initData(mascotas, adoptantes);
 
         Scene scene = new Scene(sceneMain);
         stage.setScene(scene);
+        stage.getIcons().add(new Image("/assets/icon.png"));
         stage.setTitle("Gestor de Adopciones");
         stage.show();
     }
